@@ -332,11 +332,13 @@ window.way = {};
 		
 	WAY.prototype.set = function(selector, value, options) {
 		
+		/*
 		console.log('Setting!', {
 			selector: selector,
 			value: value,
 			options: options
 		});
+		*/
 		
 		var self = this;
 		options = options || {};

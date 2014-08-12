@@ -49,11 +49,33 @@
 							Data is set to persistent. Try refreshing the page after changing some of its values.
 							
 							<br/><br/>
-							The code required to achieve that is the following:
+							The only code required) to achieve that is the following.
 							<br/>
 							
 							<code class="html">
-								&lt;form way-data="formData" way-persistent="true"&gt;...&lt;/form&gt;
+								&lt;form way-data="formData" way-persistent="true"&gt;
+									<br/>
+									<span class="indent-1">
+										&lt;input type="text" name="name"&gt;
+									</span>
+									<br/>
+									<span class="indent-1">										
+										&lt;input type="checkbox" name="nationality[]" value="french"&gt;
+									</span>
+									<br/>
+									<span class="indent-1">										
+										&lt;input type="checkbox" name="nationality[]" value="american"&gt;
+									</span>
+									<br/>
+									<span class="indent-1">										
+										&lt;input type="checkbox" name="nationality[]" value="british"&gt;
+									</span>
+									<br/>
+									<span class="indent-1">										
+										&lt;input type="checkbox" name="nationality[]" value="chinese"&gt;
+									</span>
+									<br/>
+								&lt;/form&gt;
 							</code>
 						
 						</div>
@@ -93,8 +115,6 @@
 						
 					</div>
 					
-					<br/><br/>
-					
 					<h3>Example 2</h3>
 					
 					<div class="out-box">
@@ -104,7 +124,7 @@
 							All the HTML elements below (read-only) will be binded to this input (write-only and not persistent).
 							
 							<br/><br/>
-							The code required to achieve that is the following:
+							Very little code required, again.
 							<br/>
 							
 							<code class="html">
