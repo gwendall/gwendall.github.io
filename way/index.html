@@ -10,7 +10,7 @@
 		<meta name="author" content="x">
 
 		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-		<link rel="stylesheet" href="style.css">
+		<link rel="stylesheet" href="index.css">
 
 		<script src="vendors/jquery.js"></script>
 		<script src="vendors/underscore.js"></script>
@@ -24,29 +24,41 @@
 	</head>
 	<body>
 		
-		<script id="entry-template" type="text/x-handlebars-template">
-		  template content
-		</script>
-		
-		<!--
-		<div class="alert alert-warning alert-danger">Changed to <span way-data="htmlData.value"></span></div>
-		-->		
-
 		<div class="container-fluid">
 			
 			<div class="row">
 
-				<h1>
-					Way.js
-				</h1>
-
 				<div class="col-sm-6">
-
+					
+					<h1 style="color: rgba(0, 0, 0, .5);text-align: center;">
+						way.js
+					</h1>
+					
+					<div class="alert bg-warning">
+						way.js is a simple, lightweight, persistent, framework-agnostic javascript library that allows you to bind DOM elements to an in-memory datastore (with no to little JS code). If you like buzzwords, that means super easy two-way databinding.<br/>
+						Once you played with it here, check the <a href="https://github.com/gwendall/way.js">documentation</a>.
+					</div>
+					
 					<h3>Example 1</h3>
 					
 					<div class="out-box">
 						
-						<form role="form" class="form-horizontal" id="someForm" way-data="formData" way-persistent="true">
+						<div class="alert bg-success">
+							
+							This form is binded to the "formData" property and automatically parsed on each change. 
+							Data is set to persistent. Try refreshing the page after changing some of its values.
+							
+							<br/><br/>
+							The code required to achieve that is the following:
+							<br/>
+							
+							<code class="html">
+								&lt;form way-data="formData" way-persistent="true"&gt;...&lt;/form&gt;
+							</code>
+						
+						</div>
+						
+						<form role="form" class="form-horizontal" way-data="formData" way-persistent="true">
 
 							<div class="form-group">
 								<label class="col-sm-3">Name</label>
@@ -68,7 +80,8 @@
 							</div>
 
 						</form>
-
+						
+						<!--
 						<h3>Filtered items</h3>
 
 						<ul class="list-group">
@@ -76,21 +89,36 @@
 								{{> item}}
 							{{/each}}
 						</ul>
+						-->
 						
 					</div>
+					
+					<br/><br/>
 					
 					<h3>Example 2</h3>
 					
 					<div class="out-box">
 						
-						<h4>All the HTML elements below (read-only) will be binded to the following input (write-only).</h4>
+						<div class="alert bg-success">
+							
+							All the HTML elements below (read-only) will be binded to this input (write-only and not persistent).
+							
+							<br/><br/>
+							The code required to achieve that is the following:
+							<br/>
+							
+							<code class="html">
+								&lt;input type="text" way-data="htmlData.value"&gt;
+							</code>
+							
+						</div>
 
-						<input type="text" class="form-control" way-data="htmlData.value" way-writeonly="false" way-persistent="true"
-						style="margin: 20px 0px;" placeholder="...">
+						<input type="text" class="form-control" way-data="htmlData.value" way-writeonly="false"
+						style="margin: 20px 0px;" placeholder="Type something...">
 
 						<div way-repeat="toutounes"></div>
 
-						<table class="table" style="margin: 40px 0px 100px 0px;">
+						<table class="table" style="margin-top: 40px">
 							<thead>
 								<tr>
 									<th>HTML tag</th>
@@ -99,27 +127,15 @@
 							</thead>
 							<tbody>
 								<tr>
-									<td>P</td>
-									<td>
-										<p way-data="htmlData.value"></p>
-									</td>
-								</tr>
-								<tr>
-									<td>TEXTAREA</td>
-									<td>
-										<textarea class="form-control" way-data="htmlData.value" way-readonly="true"></textarea>
-									</td>
-								</tr>
-								<tr>
 									<td>DIV</td>
 									<td>
 										<div way-data="htmlData.value"></div>
 									</td>
 								</tr>
 								<tr>
-									<td>SPAN</td>
+									<td>TEXTAREA</td>
 									<td>
-										<span way-data="htmlData.value"></span>
+										<textarea class="form-control" way-data="htmlData.value" way-readonly="true"></textarea>
 									</td>
 								</tr>
 								<tr>
@@ -135,7 +151,7 @@
 									</td>
 								</tr>
 								<tr>
-									<td>IMG (with fallback)</td>
+									<td>IMG (with way-default set)</td>
 									<td>
 										<img way-data="htmlData.value" 
 										way-default="http://img1.wikia.nocookie.net/__cb20130506083200/himym/images/5/51/Bender.jpg">
@@ -143,7 +159,7 @@
 											<small>
 											This img has a 
 											<a href="http://img1.wikia.nocookie.net/__cb20130506083200/himym/images/5/51/Bender.jpg" 
-											target="_blank">fallback</a>
+											target="_blank">default image</a>
 											if the binded data isn't an image URL
 											</small>
 										</div>
@@ -159,12 +175,13 @@
 
 				<div class="col-sm-6 col-fixed">
 
-					<h3>
-						Way data
-						<div class="btn btn-sm btn-default pull-right clearWay">Clear data</div>
-					</h3>
 					<pre way-data="" way-json="true" way-default="{}" id="way-playground"></pre>
-
+					
+					<div class="alert bg-success">
+						This is the data that exists in the way.js storage
+						<div class="btn btn-sm btn-default pull-right clearWay" style="position:relative;top:-5px;">Clear data</div>
+					</div>
+					
 				</div>
 
 			</div>

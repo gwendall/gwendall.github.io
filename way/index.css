@@ -1,22 +1,39 @@
 /* CSS declarations go here */
 body {
 	padding: 0px 20px;
+	margin: 0px 0px 50px 0px;
 	background: rgba(0, 0, 0, .05);
 }
 
 .out-box {
 	background: white;
-	padding: 5px 20px;
+	padding: 20px;
 	-webkit-box-shadow: 0 0 0 1px rgba(0, 0, 0, .1), 0 1px 10px rgba(0, 0, 0, .35);
 }
 
-.col-fixed {
-	position: fixed;
-	right: 0px;
-	top: 0px;
-	height: 100%;
-	overflow-y: scroll;
-	padding: 20px;
+
+@media (min-width: 767px) {
+	.col-fixed {
+		position: fixed;
+		right: 0px;
+		top: 0px;
+		height: 100%;
+		overflow-y: scroll;
+		padding: 20px;
+		padding-top: 100px;
+	}	
+}
+
+@media (max-width: 767px) {
+	body {
+		padding: 0px 5px;
+	}
+	table tr td {
+		max-width: 100px;
+	}
+	.col-fixed {
+		padding-top: 50px;
+	}
 }
 
 h1 {
@@ -42,7 +59,7 @@ h3 {
 }
 
 table img {
-	width: 350px;
+	width: 100%;
 	min-height: 100px;
 	background: rgba(0, 0, 0, .05);
 	border: rgba(0, 0, 0, .05) solid 3px;
@@ -64,6 +81,11 @@ table img.way-error {
 table img.way-error + .img-error-text {
 }
 
-table * {
-	max-width: 470px;
+table tr td {
+	max-width: 300px;
+	word-wrap: break-word;
+}
+
+.alert {
+	border: rgba(0, 0, 0, .1) solid thin;
 }
