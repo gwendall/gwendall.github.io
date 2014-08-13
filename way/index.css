@@ -49,12 +49,15 @@ h3 {
 	margin-left: 5px;
 }
 
-.form-group label {
+.form-group label.col-sm-3 {
 	margin-top: 7px;
 }
 
-.form-group .checkbox {
-	padding-left: 45px;
+.form-group img {
+	min-width: 100px;
+	min-height: 100px;
+	background: rgba(0, 0, 0, .1);
+	margin-top: 20px;
 }
 
 .img-error-text {

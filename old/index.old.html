@@ -40,10 +40,10 @@
 						Once you tried it here, check the <a href="https://github.com/gwendall/way.js" target="_blank">documentation</a> or play with some code on this <a href="http://jsfiddle.net/gwendall/aoovyn37/16/" target="_blank">jsFiddle</a>.
 					</div>
 					
+					<h3>Example 1</h3>
+					
 					<div class="out-box">
 						
-						<h3 style="margin: 0px;margin-bottom: 20px;">Example</h3>
-
 						<div class="alert bg-success">
 							
 							This form is binded to the "formData" property and automatically parsed on each change. 
@@ -124,9 +124,101 @@
 							</div>
 
 						</form>
+						
+						<!--
+						<h3>Filtered items</h3>
 
+						<ul class="list-group">
+							{{#each items}}
+								{{> item}}
+							{{/each}}
+						</ul>
+						-->
+						
 					</div>
-										
+					
+					<h3>Example 2</h3>
+					
+					<div class="out-box">
+						
+						<div class="alert bg-success">
+							
+							All the HTML elements below (read-only) will be binded to this input (write-only and not persistent). 
+							Try typing some values, and for example, pasting an image URL, like this one 
+							(http://static.fjcdn.com/pictures/Argument_a17804_1269098.jpg).
+							
+							<br/><br/>
+							Very little code required, again.
+							<br/>
+							
+							<code class="html">
+								&lt;input type="text" way-data="htmlData.value"&gt;
+							</code>
+							
+						</div>
+
+						<input type="text" class="form-control" way-data="htmlData.value" way-writeonly="false"
+						style="margin: 20px 0px;" placeholder="Type something...">
+
+						<table class="table" style="margin-top: 40px">
+							<thead>
+								<tr>
+									<th>HTML tag</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>A</td>
+									<td>
+										<a way-data="htmlData.value" way-href="htmlData.value" target="_blank"></a>
+									</td>
+								</tr>
+								<tr>
+									<td>DIV</td>
+									<td>
+										<div way-data="htmlData.value"></div>
+									</td>
+								</tr>
+								<tr>
+									<td>TEXTAREA</td>
+									<td>
+										<textarea class="form-control" way-data="htmlData.value" way-readonly="true"></textarea>
+									</td>
+								</tr>
+								<tr>
+									<td>PRE</td>
+									<td>
+										<pre way-data="htmlData.value" way-json="true"></pre>
+									</td>
+								</tr>
+								<tr>
+									<td>IMG</td>
+									<td>
+										<img way-data="htmlData.value">
+									</td>
+								</tr>
+								<tr>
+									<td>IMG (with way-default set)</td>
+									<td>
+										<img way-data="htmlData.value" 
+										way-default="http://img1.wikia.nocookie.net/__cb20130506083200/himym/images/5/51/Bender.jpg">
+										<div>
+											<small>
+											This img has a 
+											<a href="http://img1.wikia.nocookie.net/__cb20130506083200/himym/images/5/51/Bender.jpg" 
+											target="_blank">default image</a>
+											if the binded data isn't an image URL
+											</small>
+										</div>
+									</td>
+								</tr>
+
+							</tbody>
+						</table>
+						
+					</div>
+					
 				</div>
 
 				<div class="col-sm-6 col-fixed">

@@ -128,11 +128,9 @@ window.way = {};
 			element = element || self._element,
 			data = self.dom(element).getValue(),
 			options = options || self.dom(element).getOptions();
-			
-		// #TODO: Flatten / unflatten to allow for nested picks/omits
-		// ex: omit: ['some.nested.value']
-		if (_.isArray(options.pick)) data = _.pick(data, options.pick);
-		if (_.isArray(options.omit)) data = _.omit(data, options.omit);
+		
+		if (_.isArray(options.pick)) data = selectNested(data, options.pick, true);
+		if (_.isArray(options.omit)) data = selectNested(data, options.omit, false);
 
 		return data;
 
@@ -141,30 +139,6 @@ window.way = {};
 	//////////////////////////////
 	// DOM METHODS: JSON -> DOM //
 	//////////////////////////////
-	
-	WAY.prototype.fromJSON = function(data, options, element) {
-				
-		var self = this,
-			element = element || self._element,
-			options = options || self.dom(element).getOptions(),
-			currentData = self.dom(element).toJSON();
-
-		if (currentData == data) return false;
-		if (options.writeonly) return false;
-		
-		if (_.isObject(data) && _.isObject(currentData)) {
-			if (_.isArray(options.pick)) data = _.pick(data, options.pick);
-			if (_.isArray(options.omit)) data = _.omit(data, options.omit);
-			data = _.extend(currentData, data);		
-		}
-
-		if (options.json) {
-			data = _json.isStringified(data) ? data : _json.prettyprint(data);
-		}
-		
-		self.dom(element).setValue(data, options);
-
-	}
 	
 	WAY.prototype.fromStorage = function(options, element) {
 		
@@ -178,7 +152,30 @@ window.way = {};
 		self.dom(element).fromJSON(data, options);
 
 	}
+	
+	WAY.prototype.fromJSON = function(data, options, element) {
+				
+		var self = this,
+			element = element || self._element,
+			options = options || self.dom(element).getOptions();
 
+		if (options.writeonly) return false;
+		
+		if (_.isObject(data)) {
+			if (_.isArray(options.pick)) data = selectNested(data, options.pick, true);
+			if (_.isArray(options.omit)) data = selectNested(data, options.omit, false);			
+			var currentData = _.isObject(self.dom(element).toJSON()) ? self.dom(element).toJSON() : {};
+			data = _.extend(currentData, data);		
+		}
+
+		if (options.json) {
+			data = _json.isStringified(data) ? data : _json.prettyprint(data);
+		}
+		
+		self.dom(element).setValue(data, options);
+
+	}
+	
 	/////////////////////////////////
 	// DOM METHODS: GET - SET HTML //
 	/////////////////////////////////
@@ -211,7 +208,8 @@ window.way = {};
 	WAY.prototype.setValue = function(data, options, element) {
 		
 		var self = this,
-			element = element || self._element;
+			element = element || self._element,
+			options = options || self.dom(element).getOptions();
 		
 		var setters = {
 			'FORM': function(a) {
@@ -231,7 +229,6 @@ window.way = {};
 			'IMG': function(a) {
 				
 				if (!a) {
-					var options = self.dom(element).getOptions() || {};
 					a = options.default || "";
 					$(element).attr('src', a);
 					return false;
@@ -256,7 +253,6 @@ window.way = {};
 						} else {
 							$(element).removeClass("way-error").removeClass("way-success");
 						}
-						var options = self.dom(element).getOptions() || {};
 						a = options.default || "";
 					}
 					// if (a) $(element).attr('src', a); // Preserve the previous image or not?
@@ -271,7 +267,10 @@ window.way = {};
 		var elementType = $(element).get(0).tagName;
 		var setter = setters[elementType] || defaultSetter;
 		setter(data);
-
+		if (options.href) {
+			console.log("Setting href.", options);
+			$(element).attr("href", self.get(options.href)); // options.href
+		}
 	}
 	
 	WAY.prototype.setDefault = function(force, options, element) {
@@ -307,17 +306,16 @@ window.way = {};
 	WAY.prototype.registerBindings = function() {
 		
 		var self = this,
-			selector = "[" + tagPrefix + "-data]";
-		
-		self._bindings = self._bindings || {};
+			selector = 	"[" + tagPrefix + "-data]";
+			self._bindings = self._bindings || {};
 		
 		// #TODO: deal with bindings removed from the DOM
 		$(selector).each(function() {
 			var element = this,
 				options = self.dom(element).getOptions();
-			if (!options.data) return;
+			if (!options.data) return false;
 			self._bindings[options.data] = self._bindings[options.data] || [];
-			if (!containsDomElement(self._bindings[options.data], element)) self._bindings[options.data].push($(element));
+			if (!containsDomElement(self._bindings[options.data], element)) self._bindings[options.data].push($(element));				
 		});
 				
 	}
@@ -329,12 +327,14 @@ window.way = {};
 			
 		var bindings = [];
 		if (selector) {
-			// Set bindings for the specified selector
-			bindings = self._bindings[selector] || [];
+			// Set bindings for the specified selector (bindings with keys starting with, to include nested bindings)
+			for (var key in self._bindings) {
+				if (startsWith(key, selector)) bindings = _.union(bindings, self._bindings[key]);
+			}
 		} else {
 			// Set bindings for all selectors
-			for (var k in self._bindings) {
-				bindings = _.union(bindings, self._bindings[k]);			
+			for (var key in self._bindings) {
+				bindings = _.union(bindings, self._bindings[key]);			
 			}			
 		}
 		
@@ -480,7 +480,7 @@ window.way = {};
 			var data = self.data || {};
 			localStorage.setItem(tagPrefix, JSON.stringify(data));
 		} catch(e) {
-			console.log('Your browser does not support localStorage.');			
+			console.log("Your browser does not support localStorage.");			
 		}
 		
 	}
@@ -497,7 +497,7 @@ window.way = {};
 				}
 			} catch(e) {}
 		} catch(e) {
-			console.log('Your browser does not support localStorage.');	
+			console.log("Your browser does not support localStorage.");	
 		}
 		
 	}
@@ -528,6 +528,40 @@ window.way = {};
 		});
 		return contains;
 
+	}
+		
+	var cleanEmptyKeys = function(object) {
+
+		return _.pick(object, _.compact(_.keys(object)));
+
+	}
+
+	var filterStartingWith = function(object, string, type) { // true: pick - false: omit
+
+		var keys = _.keys(object);
+		keys.forEach(function(key) {
+			if (type) {
+				if (!startsWith(key, string)) delete object[key];				
+			} else {
+				if (startsWith(key, string)) delete object[key];				
+			}
+		});
+		return object;
+
+	}
+	
+	var selectNested = function(data, keys, type) { // true: pick - false: omit
+		
+		// Flatten / unflatten to allow for nested picks / omits (doesn't work with regular pick)
+		// ex:  data = {something:{nested:"value"}}
+		//		keys = ['something.nested']
+		
+		var flat = _json.flatten(data);
+		for (var i in keys) flat = filterStartingWith(flat, keys[i], type);
+		var unflat = _json.unflatten(flat);
+		// Unflatten returns an object with an empty property if it is given an empty object
+		return cleanEmptyKeys(unflat);
+		
 	}
 	
 	///////////////////////////////////
