@@ -37,7 +37,7 @@
 					<div class="alert bg-warning">
 						way.js is a simple, lightweight, persistent, framework-agnostic javascript library that allows you to bind DOM elements to an in-memory datastore (with no to little JS code).<br/>
 						If you like buzzwords, that means super easy two-way databinding.<br/>
-						Once you played with it here, check the <a href="https://github.com/gwendall/way.js">documentation</a>.
+						Once you tried it here, check the <a href="https://github.com/gwendall/way.js" target="_blank">documentation</a> or play with some code on this <a href="http://jsfiddle.net/gwendall/aoovyn37/16/" target="_blank">jsFiddle</a>.
 					</div>
 					
 					<h3>Example 1</h3>
@@ -150,6 +150,12 @@
 							</thead>
 							<tbody>
 								<tr>
+									<td>A</td>
+									<td>
+										<a way-data="htmlData.value" way-attr="href"></a>
+									</td>
+								</tr>
+								<tr>
 									<td>DIV</td>
 									<td>
 										<div way-data="htmlData.value"></div>
@@ -200,10 +206,12 @@
 
 					<div class="alert bg-warning">
 						This is the data stored in way.js
-						<div class="btn btn-sm btn-default pull-right clearWay" style="position:relative;top:-5px;">Clear data</div>
+						<div class="btn btn-sm btn-default pull-right" style="position:relative;top:-5px;" way-clear way-persistent="true">
+							Clear data
+						</div>
 					</div>
 					
-					<pre way-data="__all__" way-json="true" way-default="{}" id="way-playground"></pre>
+					<pre way-data="__all__" way-json="true" way-default="{}"></pre>
 										
 				</div>
 
