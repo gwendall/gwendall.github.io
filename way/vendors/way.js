@@ -85,8 +85,9 @@ window.way = {};
 		this.data = {};
 		this._bindings = {};
 		this.options = {
+			persistent: true,
 			timeoutInput: 50,
-			timeoutDOM: 100
+			timeoutDOM: 500
 		};
 
 	};
@@ -267,10 +268,7 @@ window.way = {};
 		var elementType = $(element).get(0).tagName;
 		var setter = setters[elementType] || defaultSetter;
 		setter(data);
-		if (options.href) {
-			console.log("Setting href.", options);
-			$(element).attr("href", self.get(options.href)); // options.href
-		}
+
 	}
 	
 	WAY.prototype.setDefault = function(force, options, element) {
@@ -473,7 +471,7 @@ window.way = {};
 	// LOCALSTORAGE METHODS //
 	//////////////////////////
 
-	WAY.prototype.backup = function(selector) {
+	WAY.prototype.backup = function() {
 		
 		var self = this;
 		try { 
@@ -485,7 +483,7 @@ window.way = {};
 		
 	}
 
-	WAY.prototype.restore = function(selector) {
+	WAY.prototype.restore = function() {
 		
 		var self = this;
 		try {
@@ -575,7 +573,7 @@ window.way = {};
 
 		way.registerBindings();
 		way.setDefaults();
-		way.restore();
+		if (way.options.persistent) way.restore();
 
 		// We need to register dynamically added bindings so we do it by watching DOM changes
 		// We use a timeout since "DOMSubtreeModified" gets triggered on every change in the DOM (even input value changes)
