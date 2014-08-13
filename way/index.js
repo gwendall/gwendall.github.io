@@ -1,7 +1,7 @@
 $(document).ready(function() {
 	
 	$(document).on("click", ".clearWay", function() {
-		way.remove();
+		way.clear();
 	});
 		
 	way.watchAll(function(selector, value) {
@@ -10,11 +10,5 @@ $(document).ready(function() {
 			value: value
 		});
 	});
-	
-	/*
-	way.watch("formData", function(value) {
-		console.log('"formData" property changed.', value);
-	});
-	*/
 	
 });

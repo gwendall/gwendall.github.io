@@ -71,7 +71,7 @@
 	
 	_json.is = function(json) {
 		
-		return (json.constructor.name == "Object");
+		return (toString.call(json) == "[object Object]");
 
 	}
 	
@@ -166,7 +166,7 @@
 		return result;
 		
 	}
-		
+
 	_json.unflatten = function(data) {
 		
 		if (Object(data) !== data || Array.isArray(data))
@@ -185,6 +185,12 @@
 		}
 		return result[""];
 		
+	}
+	
+	_json.prettyprint = function(json) {
+
+		return JSON.stringify(json, undefined, 2);
+
 	}
 	
 	// Integrate with Underscore.js if defined
