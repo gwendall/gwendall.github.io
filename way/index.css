@@ -69,7 +69,7 @@ table img {
 }
 
 table img.way-loading {
-	border: black solid 3px !important;
+/*	border: black solid 3px !important;*/
 }
 
 table img.way-success {
