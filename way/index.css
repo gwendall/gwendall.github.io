@@ -68,6 +68,10 @@ table img {
 	border: rgba(0, 0, 0, .05) solid 3px;
 }
 
+table img.way-loading {
+	border: blue solid 3px !important;
+}
+
 table img.way-success {
 	border: #5BEB89 solid 3px;
 }
@@ -91,4 +95,5 @@ table tr td {
 
 .alert {
 	border: rgba(0, 0, 0, .1) solid thin;
+	word-wrap: break-word;
 }
