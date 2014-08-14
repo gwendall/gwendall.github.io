@@ -51,8 +51,48 @@
 							
 							This form is binded to the "formData" property and automatically parsed on each change. 
 							Data is set to persistent. Try refreshing the page after changing some of its values.
+													
+						</div>
+						
+						<form role="form" class="form-horizontal" way-data="formData" way-persistent="true">
+
+							<div class="form-group">
+								<label class="col-sm-3">Name</label>
+								<div class="col-sm-9">
+									<input type="text" class="form-control" name="name" placeholder="Name" autocomplete="off">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3">Picture</label>
+							    <div class="col-sm-9">
+									<input type="text" class="form-control" name="picture" placeholder="Enter an image's URL to see magic" 
+									autocomplete="off">
+							        <img class="img-responsive" way-data="formData.picture" 
+									way-default="http://creditworksusa.com/wp-content/uploads/2014/03/facebook-default-profile-photo.jpg">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3">Nationality</label>
+								<div class="col-sm-9 checkbox">
+									<label class="col-sm-12">
+										<input type="checkbox" name="nationality[]" value="french">French
+									</label>
+									<label class="col-sm-12">
+										<input type="checkbox" name="nationality[]" value="american">American
+									</label>
+									<label class="col-sm-12">
+										<input type="checkbox" name="nationality[]" value="british">British
+									</label>
+									<label class="col-sm-12">
+										<input type="checkbox" name="nationality[]" value="chinese">Chinese
+									</label>
+								</div>
+							</div>
+
+						</form>
+						
+						<div class="alert bg-success">
 							
-							<br/><br/>
 							The only code required to achieve that is the following:
 							<br/><br/>
 							
@@ -92,43 +132,6 @@
 						
 						</div>
 						
-						<form role="form" class="form-horizontal" way-data="formData" way-persistent="true">
-
-							<div class="form-group">
-								<label class="col-sm-3">Name</label>
-								<div class="col-sm-9">
-									<input type="text" class="form-control" name="name" placeholder="Name" autocomplete="off">
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-sm-3">Picture</label>
-							    <div class="col-sm-9">
-									<input type="text" class="form-control" name="picture" placeholder="Enter an image's URL to see magic" 
-									autocomplete="off">
-							        <img class="img-responsive" way-data="formData.picture" 
-									way-default="http://creditworksusa.com/wp-content/uploads/2014/03/facebook-default-profile-photo.jpg">
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-sm-3">Nationality</label>
-								<div class="col-sm-9 checkbox">
-									<label class="col-sm-12">
-										<input type="checkbox" name="nationality[]" value="french">French
-									</label>
-									<label class="col-sm-12">
-										<input type="checkbox" name="nationality[]" value="american">American
-									</label>
-									<label class="col-sm-12">
-										<input type="checkbox" name="nationality[]" value="british">British
-									</label>
-									<label class="col-sm-12">
-										<input type="checkbox" name="nationality[]" value="chinese">Chinese
-									</label>
-								</div>
-							</div>
-
-						</form>
-
 					</div>
 										
 				</div>
