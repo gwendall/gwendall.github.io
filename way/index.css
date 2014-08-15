@@ -15,6 +15,10 @@ body {
 	margin-left:30px;
 }
 
+.indent-2 {
+	margin-left:60px;
+}
+
 @media (min-width: 767px) {
 	.col-fixed {
 		position: fixed;
@@ -104,4 +108,30 @@ table tr td {
 
 pre {
 	border-radius: 1px;
+}
+
+.item-entry {
+	display: table;
+	width: 100%;
+	padding: 10px;
+	background: rgba(0, 0, 0, .02);
+	border: rgba(0, 0, 0, .05) solid thin;
+}
+
+.item-entry + a {
+	float: right;
+	margin-top: 5px;
+}
+
+.item-entry label {
+	font-weight: normal;
+}
+
+.item-entry input[type="text"] {
+	margin-bottom: 10px;
+}
+
+.item-entry input[type="radio"] {
+	margin-left: 15px;
+	margin-right: 4px;
 }

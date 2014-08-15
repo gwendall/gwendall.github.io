@@ -54,7 +54,7 @@
 							Bonus: open the JS console to see watchers in action.						
 						</div>
 						
-						<form role="form" class="form-horizontal" way-data="formData" way-persistent="true">
+						<form role="form" class="form-horizontal" way-data="formData" way-persistent>
 
 							<div class="form-group">
 								<label class="col-sm-3">Name</label>
@@ -88,7 +88,46 @@
 									</label>
 								</div>
 							</div>
-
+							<div class="form-group">
+								<label class="col-sm-3">Gender</label>
+								<div class="col-sm-9">
+									<select class="form-control" name="gender">
+										<option>Female</option>
+										<option>Male</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3">Skills</label>
+								<div class="col-sm-9">
+									<a href="#" way-action-push="formData.skills" style="position: relative;
+									top: 5px;
+									left: 12px;">Add a skill</a>
+								</div>
+							</div>
+							<div class="form-group" way-repeat="formData.skills" style="padding: 0px;">
+								<label class="col-sm-3"></label>
+								<div class="col-sm-9">
+									<div class="item-entry">
+										<input type="text" class="form-control" placeholder="Skill title" 
+										way-data="this.title" way-persistent>
+										<span style="margin-left: 10px;font-weight: bold;">Level</span>
+										<label>
+											<input type="radio" way-data="this.level" way-persistent value="noob">Noob
+										</label>
+										<label>
+											<input type="radio" way-data="this.level" way-persistent value="intermediate">Intermediate
+										</label>
+										<label>
+											<input type="radio" way-data="this.level" way-persistent value="advanced">Advanced
+										</label>
+										<label>
+											<input type="radio" way-data="this.level" way-persistent value="god">God
+										</label>
+									</div>
+									<a href="#" way-action-remove="formData.skills.$$key" way-persistent>Remove</a>
+								</div>
+							</div>
 						</form>
 						
 						<div class="alert bg-success">
@@ -96,8 +135,8 @@
 							The only code required to achieve that is the following:
 							<br/><br/>
 							
-							<code class="html">
-								&lt;form way-data="formData" way-persistent="true"&gt;
+							<code class="html" style="font-size: 12px;">
+								&lt;form way-data="formData" way-persistent&gt;
 									<br/>
 									<span class="indent-1">
 										&lt;input type="text" name="name"&gt;
@@ -112,19 +151,27 @@
 									</span>
 									<br/>
 									<span class="indent-1">										
-										&lt;input type="checkbox" name="nationality[]" value="french"&gt;
+										&lt;input type="checkbox" name="nationality[]" value="french"&gt; [...]
 									</span>
 									<br/>
-									<span class="indent-1">										
-										&lt;input type="checkbox" name="nationality[]" value="american"&gt;
+									<span class="indent-1">
+										&lt;a way-action-push="formData.skills"&gt;Add a skill&lt;/a&gt;
 									</span>
 									<br/>
-									<span class="indent-1">										
-										&lt;input type="checkbox" name="nationality[]" value="british"&gt;
+									<span class="indent-1">
+										&lt;div way-repeat="formData.skills"&gt;
 									</span>
 									<br/>
-									<span class="indent-1">										
-										&lt;input type="checkbox" name="nationality[]" value="chinese"&gt;
+									<span class="indent-2">
+										&lt;input type="text" way-data="this.title" way-persistent&gt;
+									</span>
+									<br/>
+									<span class="indent-2">
+										&lt;input type="radio" value="noob" way-data="this.level" way-persistent&gt; [...]
+									</span>
+									<br/>
+									<span class="indent-1">
+										&lt;/div&gt;
 									</span>
 									<br/>
 								&lt;/form&gt;
@@ -140,11 +187,11 @@
 
 					<div class="alert bg-warning">
 						This is the data stored in way.js
-						<div class="btn btn-sm btn-default pull-right" style="position:relative;top:-5px;" way-clear way-persistent="true">
+						<div class="btn btn-sm btn-default pull-right" style="position:relative;top:-5px;" way-clear way-persistent>
 							Clear data
 						</div>
 					</div>
-					
+										
 					<pre way-data="__all__" way-json="true" way-default="{}"></pre>
 										
 				</div>
