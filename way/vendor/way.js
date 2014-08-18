@@ -541,7 +541,7 @@ window.way = {};
 
 		// Check if parent scope-break
 		var scopeBreak = $(element).parents('['+scopeBreakAttr+']').get(0);
-		
+
 		$(element).parents('['+scopeAttr+']').each(function() {
 			scopes.unshift($(this).attr(scopeAttr));
 		});
