@@ -102,9 +102,9 @@
 
 	_json.set = function(json, selector, value) {
 
+		console.log("Setting json.", json, selector, value);
 		if (json == undefined) return _json.exit("set", "missing", "json", json);
 		if (selector == undefined) return _json.exit("set", "missing", "selector", selector);
-		if (value == undefined) return _json.exit("set", "missing", "value", value);
 		if (!_.isString(selector)) return _json.exit("set", "noString", "selector", selector);
 		return value ? deepJSON(json, selector, value) : _json.remove(json, selector);
 		// return deepJSON(json, selector, value); // Now removes the property if the value is empty. Maybe should keep it instead?
