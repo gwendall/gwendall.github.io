@@ -759,19 +759,19 @@ window.way = {};
 
 	var isPrintableKey = function(e) {
 
-	    var keycode = e.keyCode;
+		var keycode = e.keyCode;
 		if (!keycode) return true;
 
-	    var valid =
-        	(keycode == 8)					 || // delete
-	        (keycode > 47 && keycode < 58)   || // number keys
-	        keycode == 32 || keycode == 13   || // spacebar & return key(s) (if you want to allow carriage returns)
-	        (keycode > 64 && keycode < 91)   || // letter keys
-	        (keycode > 95 && keycode < 112)  || // numpad keys
-	        (keycode > 185 && keycode < 193) || // ;=,-./` (in order)
-	        (keycode > 218 && keycode < 223);   // [\]' (in order)
+		var valid =
+			(keycode == 8)					 || // delete
+			(keycode > 47 && keycode < 58)   || // number keys
+			keycode == 32 || keycode == 13   || // spacebar & return key(s) (if you want to allow carriage returns)
+			(keycode > 64 && keycode < 91)   || // letter keys
+			(keycode > 95 && keycode < 112)  || // numpad keys
+			(keycode > 185 && keycode < 193) || // ;=,-./` (in order)
+			(keycode > 218 && keycode < 223);   // [\]' (in order)
 
-	    return valid;
+		return valid;
 
 	}
 
@@ -804,8 +804,9 @@ window.way = {};
 	});
 
 	var timeoutInput = null;
-	$(document).on("input change", "form[" + tagPrefix + "-data] :input", function(e) {
+	$(document).on("input keyup change", "form[" + tagPrefix + "-data] :input", function(e) {
 
+		if (!isPrintableKey(e)) return;
 		if (timeoutInput) clearTimeout(timeoutInput);
 		timeoutInput = setTimeout(function() {
 			var element = $(e.target).parents("form");
@@ -814,8 +815,9 @@ window.way = {};
 
 	});
 
-	$(document).on("input change", ":input[" + tagPrefix + "-data]", function(e) {
+	$(document).on("input keyup change", ":input[" + tagPrefix + "-data]", function(e) {
 
+		if (!isPrintableKey(e)) return;
 		if (timeoutInput) clearTimeout(timeoutInput);
 		timeoutInput = setTimeout(function() {
 			var element = $(e.target);
