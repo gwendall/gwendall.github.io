@@ -423,10 +423,10 @@ window.way = {};
 
 			$(wrapper).empty();
 			for (var key in data) {
-					repeat.element.attr(tagPrefix + "-scope", key);
-//				var _this = repeat.selector + '.' + key,
-					var html = repeat.element.get(0).outerHTML;
-//				html = html.replace(/\$\$this/gi, _this);
+				repeat.element.attr(tagPrefix + "-scope", key);
+//			var _this = repeat.selector + '.' + key,
+				var html = repeat.element.get(0).outerHTML;
+//			html = html.replace(/\$\$this/gi, _this);
 				html = html.replace(/\$\$key/gi, key);
 				items.push(html);
 			}
@@ -804,9 +804,8 @@ window.way = {};
 	});
 
 	var timeoutInput = null;
-	$(document).on("keyup change", "form[" + tagPrefix + "-data] :input", function(e) {
+	$(document).on("input change", "form[" + tagPrefix + "-data] :input", function(e) {
 
-		if (!isPrintableKey(e)) return;
 		if (timeoutInput) clearTimeout(timeoutInput);
 		timeoutInput = setTimeout(function() {
 			var element = $(e.target).parents("form");
@@ -815,9 +814,8 @@ window.way = {};
 
 	});
 
-	$(document).on("keyup change", ":input[" + tagPrefix + "-data]", function(e) {
+	$(document).on("input change", ":input[" + tagPrefix + "-data]", function(e) {
 
-		if (!isPrintableKey(e)) return;
 		if (timeoutInput) clearTimeout(timeoutInput);
 		timeoutInput = setTimeout(function() {
 			var element = $(e.target);
