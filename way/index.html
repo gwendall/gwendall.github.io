@@ -125,8 +125,10 @@
 												<input type="radio" way-data="level" way-persistent value="god">God
 											</label>
 										</div>
-										<div way-scope-break="true">
-											[For <span way-data="formData.name"></span>]
+										<div way-scope-break="true" style="padding: 8px 0px 0px 8px;
+border-top: rgba(0, 0, 0, .1) solid thin;
+margin-top: 8px;">
+											Name (in case you forgot): <span way-data="formData.name"></span>
 										</div>
 									</div>
 									<a href="#" way-action-remove="formData.skills.$$key" way-persistent>Remove</a>
