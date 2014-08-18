@@ -5,7 +5,7 @@
 window.way = {};
 
 (function(){
-	
+
 	'use strict';
 
 	var tagPrefix = "way";
@@ -116,10 +116,12 @@ window.way = {};
 		var self = this,
 			element = element || self._element,
 			options = options || self.dom(element).getOptions(),
-			data = self.dom(element).toJSON(options);
+			data = self.dom(element).toJSON(options),
+			scope = self.dom(element).scope(),
+			selector = scope ? scope + '.' + options.data : options.data;
 		
 		if (options.readonly) return false;
-		self.set(options.data, data, options);
+		self.set(selector, data, options);
 		
 	}
 	
@@ -149,7 +151,9 @@ window.way = {};
 		
 		if (options.writeonly) return false;
 		
-		var selector = options.data;
+		var scope = self.dom(element).scope(),
+			selector = scope ? scope + '.' + options.data : options.data;
+
 		var data = self.get(selector);
 		self.dom(element).fromJSON(data, options);
 
@@ -382,7 +386,7 @@ window.way = {};
 			self._repeats[options.repeat] = self._repeats[options.repeat] || [];
 
 			var wrapperAttr = tagPrefix + '-repeat-wrapper="' + self._repeatsCount + '"';
-			if (!$(element).parents("[" + wrapperAttr + "]").length) {
+			if (!$(element).parent("[" + wrapperAttr + "]").length) {
 
 				self._repeats[options.repeat].push({
 					id: self._repeatsCount,
@@ -390,8 +394,10 @@ window.way = {};
 					selector: options.repeat
 				});
 				
+				// #TODO: set an attr on each repeated elem with scope[i]
 				var wrapper = document.createElement('div');
 				$(wrapper).attr(tagPrefix + "-repeat-wrapper", self._repeatsCount);
+				$(wrapper).attr(tagPrefix + "-scope", options.repeat);
 				$(element).replaceWith(wrapper);
 				self.updateRepeats(options.repeat);
 				
@@ -519,6 +525,29 @@ window.way = {};
 		
 	    return attributes;
 		
+	}
+	
+	//////////////////////////
+	// DOM METHODS: SCOPING //
+	//////////////////////////
+
+	WAY.prototype.scope = function(element) {
+
+		var self = this,
+			element = element || self._element,
+			selector = "[" + tagPrefix + "-scope]",
+			scopesSelector = $(element).parents(selector),
+			scopes = [];
+		
+		// Gets an element's scope in descending order
+		$(scopesSelector).each(function() {
+			var scope = $(this).attr(tagPrefix + "-scope");
+			scopes.unshift(scope);
+		});
+		
+		var scope = scopes.join('.');
+		return scope;
+
 	}
 	
 	//////////////////
@@ -716,24 +745,6 @@ window.way = {};
 		
 	}
 	
-	var isPrintableKey = function(e) {
-
-	    var keycode = e.keyCode;
-		if (!keycode) return true;
-
-	    var valid = 
-        	(keycode == 8)					 || // delete
-	        (keycode > 47 && keycode < 58)   || // number keys
-	        keycode == 32 || keycode == 13   || // spacebar & return key(s) (if you want to allow carriage returns)
-	        (keycode > 64 && keycode < 91)   || // letter keys
-	        (keycode > 95 && keycode < 112)  || // numpad keys
-	        (keycode > 185 && keycode < 193) || // ;=,-./` (in order)
-	        (keycode > 218 && keycode < 223);   // [\]' (in order)
-
-	    return valid;
-		
-	}
-	
 	///////////////////////////////////
 	// INITIATE AND WATCH DOM EVENTS //
 	///////////////////////////////////
@@ -763,9 +774,8 @@ window.way = {};
 	});
 
 	var timeoutInput = null;
-	$(document).on("keyup change", "form[" + tagPrefix + "-data] :input", function(e) {
-
-		if (!isPrintableKey(e)) return;
+	$(document).on("input change", "form[" + tagPrefix + "-data] :input", function(e) {
+		
 		if (timeoutInput) clearTimeout(timeoutInput);
 		timeoutInput = setTimeout(function() {
 			var element = $(e.target).parents("form");
@@ -774,9 +784,8 @@ window.way = {};
 
 	});
 
-	$(document).on("keyup change", ":input[" + tagPrefix + "-data]", function(e) {
-		
-		if (!isPrintableKey(e)) return;
+	$(document).on("input change", ":input[" + tagPrefix + "-data]", function(e) {
+
 		if (timeoutInput) clearTimeout(timeoutInput);
 		timeoutInput = setTimeout(function() {
 			var element = $(e.target);

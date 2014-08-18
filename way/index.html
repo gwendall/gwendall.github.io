@@ -44,7 +44,11 @@
 					</div>
 					
 					<div class="out-box">
-						
+
+						<div way-scope="formData">
+							Name: <span id="someDIV" way-data="name"></span>
+						</div>
+												
 						<h3 style="margin: 0px;margin-bottom: 20px;">Example</h3>
 
 						<div class="alert bg-success">
@@ -110,19 +114,19 @@
 								<div class="col-sm-9">
 									<div class="item-entry">
 										<input type="text" class="form-control" placeholder="Skill title" 
-										way-data="$$this.title" way-persistent>
+										way-data="title" way-persistent>
 										<span style="margin-left: 10px;font-weight: bold;">Level</span>
 										<label>
-											<input type="radio" way-data="$$this.level" way-persistent value="noob">Noob
+											<input type="radio" way-data="level" way-persistent value="noob">Noob
 										</label>
 										<label>
-											<input type="radio" way-data="$$this.level" way-persistent value="intermediate">Intermediate
+											<input type="radio" way-data="level" way-persistent value="intermediate">Intermediate
 										</label>
 										<label>
-											<input type="radio" way-data="$$this.level" way-persistent value="advanced">Advanced
+											<input type="radio" way-data="level" way-persistent value="advanced">Advanced
 										</label>
 										<label>
-											<input type="radio" way-data="$$this.level" way-persistent value="god">God
+											<input type="radio" way-data="level" way-persistent value="god">God
 										</label>
 									</div>
 									<a href="#" way-action-remove="formData.skills.$$key" way-persistent>Remove</a>

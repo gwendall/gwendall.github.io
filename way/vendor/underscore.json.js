@@ -7,8 +7,9 @@
 //  - http://stackoverflow.com/questions/19098797/fastest-way-to-flatten-un-flatten-nested-json-objects
 //	Version '0.1.0'
 	
-!function(root, String) {
+!function(root) {
 
+	console.log("Arguments.", arguments);
 	'use strict';
 
 	var deepJSON = function (obj, key, value, remove) {
@@ -208,4 +209,4 @@
 	root._.json = _json;
 	root._json = _json;
 
-}(this, String);
+}(this);
