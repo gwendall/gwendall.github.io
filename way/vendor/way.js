@@ -542,15 +542,14 @@ window.way = {};
 		// Check if parent scope-break
 		var scopeBreak = $(element).parents('['+scopeBreakAttr+']').get(0);
 
-		$(element).parents('['+scopeAttr+']').each(function() {
+		$(element).parents('['+scopeBreakAttr+'], ['+scopeAttr+']').each(function() {
+			if ($(this).attr(scopeBreakAttr)) return false;
 			scopes.unshift($(this).attr(scopeAttr));
 		});
 		if ($(element).attr(scopeAttr)) scopes.push($(element).attr(scopeAttr));
 		if ($(element).attr(scopeBreakAttr)) scopes = [];
 
 		scope = scopes.join('.');
-		var options = self.dom(element).getOptions();
-		console.log("Getting element scope.", options.data, scope);
 
 		return scope;
 
