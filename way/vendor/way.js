@@ -192,9 +192,6 @@ window.way = {};
 			element = element || self._element;
 
 		var getters = {
-			'FORM': function() {
-				return form2js($(element).get(0));
-			},
 			'SELECT': function() {
 				return $(element).val();
 			},
@@ -229,9 +226,6 @@ window.way = {};
 			options = options || self.dom(element).getOptions();
 
 		var setters = {
-			'FORM': function(a) {
-				js2form($(element).get(0), a);
-			},
 			'SELECT': function(a) {
 				if (a == $(element).val()) $(element).prop("selected", true);
 				else $(element).removeAttr("selected");
@@ -459,12 +453,12 @@ window.way = {};
 	WAY.prototype.updateForms = function() {
 
 		// If we just parse the forms with form2js and set the data with way.set(),
-		// we have to reset the entire data for this element. It can cause the bug
+		// we reset the entire data for this pathkey in the datastore. It causes the bug
 		// reported here: https://github.com/gwendall/way.js/issues/10
 		// Solution:
 		// 1. watch new forms with a [way-data] attribute
 		// 2. remove this attribute
-		// 3. attach the appropriate attribure to its inputs
+		// 3. attach the appropriate attributes to its child inputs
 		// -> so that each input is set separately to way.js' datastore
 
 		var self = this;
@@ -866,7 +860,7 @@ window.way = {};
 		way.setDefaults();
 		way.registerDependencies();
 		way.updateDependencies();
-		
+
 		// We need to register dynamically added bindings so we do it by watching DOM changes
 		// We use a timeout since "DOMSubtreeModified" gets triggered on every change in the DOM (even input value changes)
 		// so we can limit the number of scans when a user is typing something
