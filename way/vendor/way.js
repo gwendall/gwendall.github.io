@@ -362,7 +362,7 @@ window.way = {};
 		// Set bindings for the data selector
 		var bindings = pickAndMergeParentArrays(self._bindings, selector);
 		bindings.forEach(function(element) {
-			var focused = (($(element).get(0).tagName == "FORM") && ($(element).get(0) == $(':focus').parents("form").get(0))) ? true : false;
+			var focused = ($(element).get(0) == $(':focus').get(0)) ? true : false;
 			if (!focused) self.dom(element).fromStorage();
 		});
 
@@ -452,7 +452,7 @@ window.way = {};
 
 	WAY.prototype.updateForms = function() {
 
-		// If we just parse the forms with form2js and set the data with way.set(),
+		// If we just parse the forms with form2js (see commits before 08/19/2014) and set the data with way.set(),
 		// we reset the entire data for this pathkey in the datastore. It causes the bug
 		// reported here: https://github.com/gwendall/way.js/issues/10
 		// Solution:
