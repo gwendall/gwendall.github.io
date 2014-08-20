@@ -28,7 +28,7 @@ body {
 		overflow-y: scroll;
 		padding: 20px;
 		padding-top: 100px;
-	}	
+	}
 }
 
 @media (max-width: 767px) {
