@@ -135,3 +135,11 @@ pre {
 	margin-left: 15px;
 	margin-right: 4px;
 }
+
+.containr .btn .hiddenStuff {
+	display: none;
+}
+
+.containr .btn:hover .hiddenStuff {
+	display: block;
+}
